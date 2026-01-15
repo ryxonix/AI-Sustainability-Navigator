@@ -75,8 +75,8 @@ if st.button("Generate Sustainable Route"):
 
                 Task:
                 Display the temperature of from and to cities.
-                Suggest a 'Cool Route' strategy. Provide a Google Maps link.
                 Give landmarks to visit along the route.
+                Suggest a 'Optimised' strategy. Provide a Google Maps link in this format : https://www.google.com/maps/dir/{from_city}/{to_city}/
                 Explain how this supports SDG 11 and SDG 3. 
                 Mention a safety tip for {live_temp}°C weather.
                 """
