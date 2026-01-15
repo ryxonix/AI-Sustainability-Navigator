@@ -13,7 +13,7 @@ Our AI agent uses **RAG** to:
 
 ## 🏗️ System Architecture
 The following diagram illustrates how the RAG pipeline processes user requests:
-
+<img width="1150" height="1891" alt="diagram-export-15-01-2026-20_49_08" src="https://github.com/user-attachments/assets/7b6b29e0-ce03-4e9b-964a-f40d27850e6c" />
 
 ## 🛠️ Tech Stack
 - **AI Model:** Llama-3.3-70b-versatile (via Groq Cloud)
