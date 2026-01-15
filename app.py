@@ -8,10 +8,20 @@ st.set_page_config(page_title="AI Sustainability Navigator", page_icon="🌍")
 
 # --- INITIALIZATION ---
 # It's better to use Streamlit secrets or a text input for the key
-try:
-    from config import GROQ_API_KEY
-except ImportError:
-    GROQ_API_KEY = st.sidebar.text_input("Enter Groq API Key", type="password")
+
+# 1. Try to get the key from Streamlit Secrets (for Web/Cloud)
+# 2. Fallback to st.sidebar input if Secrets are missing
+if "GROQ_API_KEY" in st.secrets:
+    GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+else:
+    GROQ_API_KEY = st.sidebar.text_input("Paste your Groq API Key here:", type="password")
+
+# Only initialize if the key actually exists to avoid the TypeError
+if GROQ_API_KEY:
+    client = Groq(api_key=GROQ_API_KEY)
+else:
+    st.error("Please add your GROQ_API_KEY to Streamlit Secrets or the sidebar.")
+    st.stop() # Prevents the rest of the app from running and crashing
 
 client = Groq(api_key=GROQ_API_KEY)
 geolocator = Nominatim(user_agent="sustainability_navigator_1m1b")
