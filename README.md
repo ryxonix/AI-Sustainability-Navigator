@@ -24,5 +24,5 @@ The following diagram illustrates how the RAG pipeline processes user requests:
 ## 📦 Installation & Usage
 1. Clone the repo:
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/AI-Sustainability-Navigator.git](https://github.com/ryxonix/AI-Sustainability-Navigator.git)
+   git clone https://github.com/ryxnoix/AI-Sustainability-Navigator.git
 
