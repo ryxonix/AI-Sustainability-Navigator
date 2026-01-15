@@ -2,31 +2,22 @@ import streamlit as st
 import requests
 from groq import Groq
 from geopy.geocoders import Nominatim
-
-# --- PAGE CONFIG ---
 st.set_page_config(page_title="AI Sustainability Navigator", page_icon="🌍")
 
-# --- INITIALIZATION ---
-# It's better to use Streamlit secrets or a text input for the key
-
-# 1. Try to get the key from Streamlit Secrets (for Web/Cloud)
-# 2. Fallback to st.sidebar input if Secrets are missing
 if "GROQ_API_KEY" in st.secrets:
     GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 else:
     GROQ_API_KEY = st.sidebar.text_input("Paste your Groq API Key here:", type="password")
 
-# Only initialize if the key actually exists to avoid the TypeError
 if GROQ_API_KEY:
     client = Groq(api_key=GROQ_API_KEY)
 else:
     st.error("Please add your GROQ_API_KEY to Streamlit Secrets or the sidebar.")
-    st.stop() # Prevents the rest of the app from running and crashing
+    st.stop() 
 
 client = Groq(api_key=GROQ_API_KEY)
 geolocator = Nominatim(user_agent="sustainability_navigator_1m1b")
 
-# --- YOUR ORIGINAL FUNCTIONS ---
 def get_coords(city_name):
     try:
         location = geolocator.geocode(city_name)
@@ -42,11 +33,9 @@ def retrieve_weather_rag(lat, lon):
     except Exception:
         return "Unknown"
 
-# --- WEB INTERFACE ---
 st.title("🌍 AI Sustainability Navigator")
 st.markdown("### SDG 11 (Sustainable Cities) & SDG 3 (Health & Well-being)")
 
-# Layout for inputs
 col1, col2 = st.columns(2)
 with col1:
     start_city = st.text_input("Starting City", placeholder="e.g. Mumbai")
@@ -58,7 +47,6 @@ if st.button("Generate Sustainable Route"):
         st.error("Please provide a Groq API Key in the sidebar.")
     elif start_city and end_city:
         with st.spinner(f"Analyzing climate data for {start_city}..."):
-            # Logic execution
             lat, lon = get_coords(start_city)
             
             if lat is None:
@@ -86,8 +74,6 @@ if st.button("Generate Sustainable Route"):
                         messages=[{"role": "user", "content": prompt}],
                         model="llama-3.3-70b-versatile",
                     )
-                    
-                    # Display Result
                     st.divider()
                     st.markdown(chat_completion.choices[0].message.content)
                     
